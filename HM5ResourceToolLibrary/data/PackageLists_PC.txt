@@ -1,0 +1,1 @@
+[[assembly:/common/pc.layoutconfig].pc_layoutdef].pc_packagelist

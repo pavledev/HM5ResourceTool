@@ -1,0 +1,227 @@
+﻿<mah:MetroWindow x:Class="HM5ResourceTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HM5ResourceTool"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="HM5 Resource Tool"
+        Height="800"
+        Width="1400"
+        TitleCharacterCasing="Normal"
+        FontSize="16"
+        Closed="MainWindow_Closed">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Menu>
+                <MenuItem Header="File">
+                    <MenuItem Header="Open Runtime Folder" Click="OpenRuntimeFolder_Click" />
+                </MenuItem>
+                <MenuItem Header="Export">
+                    <MenuItem Header="Template and Blueprint">
+                        <MenuItem Header="Export TEMP" Tag="TEMP" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export TBLU" Tag="TBLU" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export CPPT" Tag="CPPT" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export CBLU" Tag="CBLU" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Model">
+                        <MenuItem Header="Export PRIM" Tag="PRIM" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Material">
+                        <MenuItem Header="Export MATI" Tag="MATI" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export MATT" Tag="MATT" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export MATB" Tag="MATB" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="AI Behavior Tree">
+                        <MenuItem Header="Export AIBB" Tag="AIBB" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Texture">
+                        <MenuItem Header="Export TEXT" Tag="TEXT" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Scaleform">
+                        <MenuItem Header="Export SWFF" Tag="SWFF" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export GFXF" Tag="GFXF" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Audio">
+                        <MenuItem Header="Export FSBF" Tag="FSBF" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export FSBM" Tag="FSBM" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export FSBS" Tag="FSBS" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export WAVB" Tag="WAVB" Click="ExportResourceMenuItem_Click" />
+                        <MenuItem Header="Export MUCB" Tag="MUCB" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Text List">
+                        <MenuItem Header="Export TELI" Tag="TELI" Click="ExportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Video">
+                        <MenuItem Tag="pc_binkvid" Click="ExportResourceMenuItem_Click">
+                            <MenuItem.Header>
+                                <TextBlock Text="Export pc_binkvid"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Tag="pc_packagelist" Header="Package List">
+                        <MenuItem Click="ExportResourceMenuItem_Click">
+                            <MenuItem.Header>
+                                <TextBlock Text="Export pc_packagelist"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Import">
+                    <MenuItem Header="Template and Blueprint">
+                        <MenuItem Header="Import TEMP" Tag="TEMP" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import TBLU" Tag="TBLU" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import CPPT" Tag="CPPT" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import CBLU" Tag="CBLU" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Model">
+                        <MenuItem Header="Import PRIM" Tag="PRIM" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Material">
+                        <MenuItem Header="Import MATI" Tag="MATI" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import MATT" Tag="MATT" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import MATB" Tag="MATB" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="AI Behavior Tree">
+                        <MenuItem Header="Import AIBB" Tag="AIBB" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Texture">
+                        <MenuItem Header="Import TEXT" Tag="TEXT" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Scaleform">
+                        <MenuItem Header="Import SWFF" Tag="SWFF" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import GFXF" Tag="GFXF" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Audio">
+                        <MenuItem Header="Import FSBF" Tag="FSBF" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import FSBM" Tag="FSBM" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import FSBS" Tag="FSBS" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import WAVB" Tag="WAVB" Click="ImportResourceMenuItem_Click" />
+                        <MenuItem Header="Import MUCB" Tag="MUCB" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Text List">
+                        <MenuItem Header="Import TELI" Tag="TELI" Click="ImportResourceMenuItem_Click" />
+                    </MenuItem>
+                    <MenuItem Header="Video">
+                        <MenuItem Tag="pc_binkvid" Click="ImportResourceMenuItem_Click">
+                            <MenuItem.Header>
+                                <TextBlock Text="Import pc_binkvid"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Package List">
+                        <MenuItem Tag="pc_packagelist" Click="ImportResourceMenuItem_Click">
+                            <MenuItem.Header>
+                                <TextBlock Text="Import pc_packagelist"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Tools">
+                    <MenuItem
+                        Header="Convert assembly path to file path"
+                        Click="ConvertAssemblyPathToFilePathMenuItem_Click" />
+                    <MenuItem
+                        Header="Convert runtime resource id to assembly path"
+                        Click="ConvertRuntimeResourceIDToAssemblyPathMenuItem_Click" />
+                </MenuItem>
+                <MenuItem Header="Theme">
+                    <MenuItem Header="Light/Blue" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Light/Brown" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Light/Green" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Light/Orange" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Light/Purple" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Light/Red" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Light/Yellow" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/Blue" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/Brown" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/Green" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/Orange" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/Purple" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/Red" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/Yellow" Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem Header="Dark/While" Click="ChangeThemeMenuItem_Click" />
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <TreeView Name="treeView" SelectedItemChanged="TreeView_SelectedItemChanged" />
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Name="lblCurrentDirectory"/>
+                <ListView
+                    Name="lvResources"
+                    Height="Auto"
+                    Grid.Row="1"
+                    ContextMenuOpening="ContextMenu_ContextMenuOpening">
+                    <ListView.View>
+                        <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeader}">
+                            <GridViewColumn Header="Resource ID" Width="700" DisplayMemberBinding="{Binding ResourceID}" />
+                            <GridViewColumn Header="Number of resource libraries" Width="450" DisplayMemberBinding="{Binding NumberOfResourceLibraries}" />
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem
+                                x:Name="viewResourcesMenuItem"
+                                Header="View Resources" 
+                                Click="ViewResourcesMenuItem_Click" />
+                            <MenuItem
+                                x:Name="viewVideoMenuItem"
+                                Header="View Video" 
+                                Click="ViewVideoMenuItem_Click" />
+                            <MenuItem
+                                x:Name="viewPackageListMenuItem"
+                                Header="View Package List" 
+                                Click="ViewPackageListMenuItem_Click" />
+                            <MenuItem
+                                x:Name="viewIDMapMenuItem"
+                                Header="View ID Map" 
+                                Click="ViewIDMapMenuItem_Click" />
+                            <MenuItem
+                                x:Name="exportHeaderLibraryMenuItem"
+                                Header="Export Header Library" 
+                                Click="ExportHeaderLibraryMenuItem_Click" />
+                            <MenuItem
+                                x:Name="exportPackageListMenuItem"
+                                Header="Export Package List" 
+                                Click="ExportPackageListMenuItem_Click" />
+                            <MenuItem
+                                x:Name="exportIDMapMenuItem"
+                                Header="Export ID Map" 
+                                Click="ExportIDMapMenuItem_Click" />
+                            <MenuItem
+                                x:Name="exportVideoMenuItem"
+                                Header="Export Video" 
+                                Click="ExportVideoMenuItem_Click" />
+                            <MenuItem
+                                x:Name="showInFileExplorerMenuItem"
+                                Header="Show In File Explorer" 
+                                Click="ShowInFileExplorerMenuItem_Click" />
+                            <MenuItem
+                                x:Name="extractResourcesFromHeaderLibraryMenuItem"
+                                Header="Extract Resources From Header Library" 
+                                Click="ExtractResourcesFromHeaderLibraryMenuItem_Click" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                            <Setter Property="ToolTip" Value="{Binding Path=ToolTip}"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</mah:MetroWindow>
+    

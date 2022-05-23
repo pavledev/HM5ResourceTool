@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5f2bc3ac-e86e-4d57-a454-02028b1fa970}</ProjectGuid>
+    <RootNamespace>HM5ResourceToolLibrary</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\Debug\net6.0-windows\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;HM5RESOURCETOOLLIBRARY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OpenMPSupport>true</OpenMPSupport>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTexd.lib;liboggd.lib;libvorbisd.lib;zlibstatd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)data\*" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;HM5RESOURCETOOLLIBRARY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;HM5RESOURCETOOLLIBRARY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;HM5RESOURCETOOLLIBRARY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Glacier2\EActorPerceptionSensitivity.hpp" />
+    <ClInclude Include="include\framework.h" />
+    <ClInclude Include="include\DirectXTex\BC.h" />
+    <ClInclude Include="include\DirectXTex\BCDirectCompute.h" />
+    <ClInclude Include="include\DirectXTex\d3dx12.h" />
+    <ClInclude Include="include\DirectXTex\DDS.h" />
+    <ClInclude Include="include\DirectXTex\DirectXTex.h" />
+    <ClInclude Include="include\DirectXTex\DirectXTexP.h" />
+    <ClInclude Include="include\DirectXTex\filters.h" />
+    <ClInclude Include="include\DirectXTex\scoped.h" />
+    <ClInclude Include="include\FSB\FSB.hpp" />
+    <ClInclude Include="include\FSB\IO\IMAADPCMWAVEFORMAT.hpp" />
+    <ClInclude Include="include\FSB\IO\SWAVHeader.hpp" />
+    <ClInclude Include="include\FSB\IO\WAVEFORMATEX.hpp" />
+    <ClInclude Include="include\FSB\IO\ZBufferView.hpp" />
+    <ClInclude Include="include\FSB\IO\ZUtil.hpp" />
+    <ClInclude Include="include\FSB\IO\ZWAVWriter.hpp" />
+    <ClInclude Include="include\FSB\Vorbis\ZRebuilder.hpp" />
+    <ClInclude Include="include\FSB\Vorbis\Vorbis.hpp" />
+    <ClInclude Include="include\FSB\ZContainer.hpp" />
+    <ClInclude Include="include\Glacier2\BehaviorTree\SBehaviorTreeEntityReference.hpp" />
+    <ClInclude Include="include\Glacier2\BehaviorTree\SBehaviorTreeInfo.hpp" />
+    <ClInclude Include="include\Glacier2\BehaviorTree\SBehaviorTreeInputPinCondition.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SCppEntity.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SCppEntityBlueprint.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SCppEntitySubsetInfo.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SEntityTemplateEntitySubset.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SEntityTemplatePinConnection.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SEntityTemplateProperty.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SEntityTemplatePropertyAlias.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\SEntityTemplateReference.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\STemplateEntity.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\STemplateEntityBlueprint.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\STemplateSubEntity.hpp" />
+    <ClInclude Include="include\Glacier2\Entity\STemplateSubEntityBlueprint.hpp" />
+    <ClInclude Include="include\Glacier2\ESettingsParam.hpp" />
+    <ClInclude Include="include\Glacier2\HeaderLibrary\SHeaderLibrary.hpp" />
+    <ClInclude Include="include\Glacier2\HeaderLibrary\SHeaderLibraryChunk.hpp" />
+    <ClInclude Include="include\Glacier2\Math\SMatrix33.hpp" />
+    <ClInclude Include="include\Glacier2\Math\SMatrix43.hpp" />
+    <ClInclude Include="include\Glacier2\Math\SVector2.hpp" />
+    <ClInclude Include="include\Glacier2\Math\SVector3.hpp" />
+    <ClInclude Include="include\Glacier2\Math\SVector4.hpp" />
+    <ClInclude Include="include\Glacier2\PackageList\SPackageListData.hpp" />
+    <ClInclude Include="include\Glacier2\PackageList\SPackageListDataFolder.hpp" />
+    <ClInclude Include="include\Glacier2\PackageList\SPackageListDataSection.hpp" />
+    <ClInclude Include="include\Glacier2\Render\ERenderFormat.hpp" />
+    <ClInclude Include="include\Glacier2\Render\ERenderResourceMipInterpolation.hpp" />
+    <ClInclude Include="include\Glacier2\Render\SRenderFormatDesc.hpp" />
+    <ClInclude Include="include\Glacier2\Render\SRMaterialProperties.hpp" />
+    <ClInclude Include="include\Glacier2\Resource\EResourceReferenceFlags.hpp" />
+    <ClInclude Include="include\Glacier2\Resource\SResourceHeaderHeader.hpp" />
+    <ClInclude Include="include\Glacier2\Resource\ZLocalResourceFileMediator.hpp" />
+    <ClInclude Include="include\Glacier2\Resource\ZResourceHeaderReader.hpp" />
+    <ClInclude Include="include\Glacier2\Resource\ZRuntimeResourceID.hpp" />
+    <ClInclude Include="include\Glacier2\SBodyPartDamageMultipliers.hpp" />
+    <ClInclude Include="include\Glacier2\Scaleform\SGfxResource.hpp" />
+    <ClInclude Include="include\Glacier2\SColorRGB.hpp" />
+    <ClInclude Include="include\Glacier2\SColorRGBA.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\EMusicPlaylistPlayType.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\EMusicPlayStartType.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\EMusicTrackExposingType.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\EMusicTransitionFadeType.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\EMusicTransitionType.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\EWaveBankMemoryLoadRTType.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\EWaveBankRTFormat.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicCompositionData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicGameCueData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicPlaylistData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicPlaylistEndBehavior.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicPlaylistNodeData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicSegmentData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicStingerData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicTimeSignature.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicTrackData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicTrackEntryData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicTrackExposingGroupData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicTrackVariationData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SMusicTransition.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\SWaveBankResourceData.hpp" />
+    <ClInclude Include="include\Glacier2\Sound\ZSpeakerLevels.hpp" />
+    <ClInclude Include="include\Glacier2\SResourceIndex.hpp" />
+    <ClInclude Include="include\Glacier2\SResourceIndexFolder.hpp" />
+    <ClInclude Include="include\Glacier2\SSettingsParamMultiplier.hpp" />
+    <ClInclude Include="include\Glacier2\TArray.hpp" />
+    <ClInclude Include="include\Glacier2\TFixedArray.hpp" />
+    <ClInclude Include="include\Glacier2\TFixedArrayBase.hpp" />
+    <ClInclude Include="include\Glacier2\TPair.hpp" />
+    <ClInclude Include="include\Glacier2\TSparseShortArray.hpp" />
+    <ClInclude Include="include\Glacier2\TypeInfo\ETypeInfoFlags.hpp" />
+    <ClInclude Include="include\Glacier2\TypeInfo\IType.hpp" />
+    <ClInclude Include="include\Glacier2\TypeInfo\STypeID.hpp" />
+    <ClInclude Include="include\Glacier2\ZBinaryDeserializer.hpp" />
+    <ClInclude Include="include\Glacier2\ZBinarySerializer.hpp" />
+    <ClInclude Include="include\Glacier2\ZCurve.hpp" />
+    <ClInclude Include="include\Glacier2\ZFixedArrayData.hpp" />
+    <ClInclude Include="include\Glacier2\ZGameTime.hpp" />
+    <ClInclude Include="include\Glacier2\ZObjectRef.hpp" />
+    <ClInclude Include="include\Glacier2\ZSharedSensorDef.hpp" />
+    <ClInclude Include="include\Glacier2\ZString.hpp" />
+    <ClInclude Include="include\Glacier2\ZTextureMap.hpp" />
+    <ClInclude Include="include\Glacier2\ZVariant.hpp" />
+    <ClInclude Include="include\MapNode.hpp" />
+    <ClInclude Include="include\Model\EPropertyFlags.hpp" />
+    <ClInclude Include="include\Model\GLTF.hpp" />
+    <ClInclude Include="include\Hash\MD5.hpp" />
+    <ClInclude Include="include\Hash\ZCrc32Generator.hpp" />
+    <ClInclude Include="include\IO\IInputStream.hpp" />
+    <ClInclude Include="include\IO\IOutputStream.hpp" />
+    <ClInclude Include="include\IO\ZBinaryReader.hpp" />
+    <ClInclude Include="include\IO\ZBinaryWriter.hpp" />
+    <ClInclude Include="include\IO\ZFileInputStream.hpp" />
+    <ClInclude Include="include\IO\ZFileOutputStream.hpp" />
+    <ClInclude Include="include\IO\ZJSONDeserializer.hpp" />
+    <ClInclude Include="include\IO\ZJSONSerializer.hpp" />
+    <ClInclude Include="include\IO\ZMemoryInputStream.hpp" />
+    <ClInclude Include="include\IO\ZMemoryOuputStream.hpp" />
+    <ClInclude Include="include\Material\ZRenderMaterialEntity.hpp" />
+    <ClInclude Include="include\Material\ZRenderMaterialEntityBlueprint.hpp" />
+    <ClInclude Include="include\Material\ZRenderMaterialInstance.hpp" />
+    <ClInclude Include="include\Model\ZMeshBufferBuilder.hpp" />
+    <ClInclude Include="include\Model\ZRenderPrimitive.hpp" />
+    <ClInclude Include="include\ogg\ogg.h" />
+    <ClInclude Include="include\ogg\os_types.h" />
+    <ClInclude Include="include\Registry\ZEnumRegistry.hpp" />
+    <ClInclude Include="include\Registry\ZPropertyRegistry.hpp" />
+    <ClInclude Include="include\Registry\ZTypeRegistry.hpp" />
+    <ClInclude Include="include\SAudioSample.hpp" />
+    <ClInclude Include="include\Scaleform\ActionTAG.hpp" />
+    <ClInclude Include="include\Scaleform\AlignZone.hpp" />
+    <ClInclude Include="include\Scaleform\Bitmap.hpp" />
+    <ClInclude Include="include\Scaleform\Character.hpp" />
+    <ClInclude Include="include\Scaleform\CharacterType.hpp" />
+    <ClInclude Include="include\Scaleform\CXForm.hpp" />
+    <ClInclude Include="include\Scaleform\FillStyle.hpp" />
+    <ClInclude Include="include\Scaleform\Filter.hpp" />
+    <ClInclude Include="include\Scaleform\FilterList.hpp" />
+    <ClInclude Include="include\Scaleform\Font.hpp" />
+    <ClInclude Include="include\Scaleform\FontUsage.hpp" />
+    <ClInclude Include="include\Scaleform\Gradient.hpp" />
+    <ClInclude Include="include\Scaleform\ISwfFileReader.hpp" />
+    <ClInclude Include="include\Scaleform\Layer.hpp" />
+    <ClInclude Include="include\Scaleform\LineStyle.hpp" />
+    <ClInclude Include="include\Scaleform\Matrix.hpp" />
+    <ClInclude Include="include\Scaleform\PNG.hpp" />
+    <ClInclude Include="include\Scaleform\RenderBuffer.hpp" />
+    <ClInclude Include="include\Scaleform\RenderBufferInternal.hpp" />
+    <ClInclude Include="include\Scaleform\RenderLine.hpp" />
+    <ClInclude Include="include\Scaleform\RenderPoint.hpp" />
+    <ClInclude Include="include\Scaleform\RGBA.hpp" />
+    <ClInclude Include="include\Scaleform\Shape.hpp" />
+    <ClInclude Include="include\Scaleform\Shape2.hpp" />
+    <ClInclude Include="include\Scaleform\ShapeLine.hpp" />
+    <ClInclude Include="include\Scaleform\ShapeLineType.hpp" />
+    <ClInclude Include="include\Scaleform\SPoint.hpp" />
+    <ClInclude Include="include\Scaleform\SRect.hpp" />
+    <ClInclude Include="include\Scaleform\State.hpp" />
+    <ClInclude Include="include\Scaleform\Swf.hpp" />
+    <ClInclude Include="include\Scaleform\SwfFileReader.hpp" />
+    <ClInclude Include="include\Scaleform\SwfFont.hpp" />
+    <ClInclude Include="include\Scaleform\SwfGlyph.hpp" />
+    <ClInclude Include="include\Scaleform\SwfGlyphPair.hpp" />
+    <ClInclude Include="include\Scaleform\SwfKerning.hpp" />
+    <ClInclude Include="include\Scaleform\SwfLayout.hpp" />
+    <ClInclude Include="include\Scaleform\SwfPlaceObject.hpp" />
+    <ClInclude Include="include\Scaleform\SWFRender.hpp" />
+    <ClInclude Include="include\Scaleform\Tag.hpp" />
+    <ClInclude Include="include\Scaleform\TextCallbackBlock.hpp" />
+    <ClInclude Include="include\Scaleform\UsageTmp.hpp" />
+    <ClInclude Include="include\SEntityTemplate.hpp" />
+    <ClInclude Include="include\Texture\DDS.hpp" />
+    <ClInclude Include="include\tinygltf\json.hpp" />
+    <ClInclude Include="include\tinygltf\stb_image.h" />
+    <ClInclude Include="include\tinygltf\stb_image_write.h" />
+    <ClInclude Include="include\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="include\vorbis\codec.h" />
+    <ClInclude Include="include\vorbis\vorbisenc.h" />
+    <ClInclude Include="include\vorbis\vorbisfile.h" />
+    <ClInclude Include="include\ZAudio.hpp" />
+    <ClInclude Include="include\ZBehaviorTree.hpp" />
+    <ClInclude Include="include\ZChartType.hpp" />
+    <ClInclude Include="include\ZEntityTemplate.hpp" />
+    <ClInclude Include="include\ZHeaderLibrary.hpp" />
+    <ClInclude Include="include\zlib\inflate.h" />
+    <ClInclude Include="include\zlib\zconf.h" />
+    <ClInclude Include="include\zlib\zlib.h" />
+    <ClInclude Include="include\ZMaterial.hpp" />
+    <ClInclude Include="include\ZModel.hpp" />
+    <ClInclude Include="include\ZPackageList.hpp" />
+    <ClInclude Include="include\ZResource.hpp" />
+    <ClInclude Include="include\ZResourceExporter.hpp" />
+    <ClInclude Include="include\ZResourceImporter.hpp" />
+    <ClInclude Include="include\ZResourceIndex.hpp" />
+    <ClInclude Include="include\ZResourceLibrary.hpp" />
+    <ClInclude Include="include\ZScaleform.hpp" />
+    <ClInclude Include="include\ZTextList.hpp" />
+    <ClInclude Include="include\ZTexture.hpp" />
+    <ClInclude Include="include\ZUtility.hpp" />
+    <ClInclude Include="include\ZVideo.hpp" />
+    <ClInclude Include="include\pch.h" />
+    <ClInclude Include="src\Glacier2\ECameraState.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="src\Glacier2\SBodyPartDamageMultipliers.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\ZSpeakerLevels.cpp" />
+    <ClCompile Include="src\Glacier2\SResourceIndex.cpp" />
+    <ClCompile Include="src\Glacier2\SResourceIndexFolder.cpp" />
+    <ClCompile Include="src\Glacier2\SSettingsParamMultiplier.cpp" />
+    <ClCompile Include="src\Glacier2\ZGameTime.cpp" />
+    <ClCompile Include="src\Glacier2\ZSharedSensorDef.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\FSB\IO\ZBufferView.cpp" />
+    <ClCompile Include="src\FSB\IO\ZUtil.cpp" />
+    <ClCompile Include="src\FSB\IO\ZWAVWriter.cpp" />
+    <ClCompile Include="src\FSB\Vorbis\Vorbis.cpp" />
+    <ClCompile Include="src\FSB\Vorbis\ZRebuilder.cpp" />
+    <ClCompile Include="src\FSB\ZContainer.cpp" />
+    <ClCompile Include="src\Glacier2\BehaviorTree\SBehaviorTreeEntityReference.cpp" />
+    <ClCompile Include="src\Glacier2\BehaviorTree\SBehaviorTreeInfo.cpp" />
+    <ClCompile Include="src\Glacier2\BehaviorTree\SBehaviorTreeInputPinCondition.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SCppEntity.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SCppEntityBlueprint.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SCppEntitySubsetInfo.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SEntityTemplateEntitySubset.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SEntityTemplatePinConnection.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SEntityTemplateProperty.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SEntityTemplatePropertyAlias.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\SEntityTemplateReference.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\STemplateEntity.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\STemplateEntityBlueprint.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\STemplateSubEntity.cpp" />
+    <ClCompile Include="src\Glacier2\Entity\STemplateSubEntityBlueprint.cpp" />
+    <ClCompile Include="src\Glacier2\HeaderLibrary\SHeaderLibrary.cpp" />
+    <ClCompile Include="src\Glacier2\HeaderLibrary\SHeaderLibraryChunk.cpp" />
+    <ClCompile Include="src\Glacier2\Math\SMatrix33.cpp" />
+    <ClCompile Include="src\Glacier2\Math\SMatrix43.cpp" />
+    <ClCompile Include="src\Glacier2\Math\SVector2.cpp" />
+    <ClCompile Include="src\Glacier2\Math\SVector3.cpp" />
+    <ClCompile Include="src\Glacier2\Math\SVector4.cpp" />
+    <ClCompile Include="src\Glacier2\PackageList\SPackageListData.cpp" />
+    <ClCompile Include="src\Glacier2\PackageList\SPackageListDataFolder.cpp" />
+    <ClCompile Include="src\Glacier2\PackageList\SPackageListDataSection.cpp" />
+    <ClCompile Include="src\Glacier2\Resource\SResourceHeaderHeader.cpp" />
+    <ClCompile Include="src\Glacier2\Resource\ZLocalResourceFileMediator.cpp" />
+    <ClCompile Include="src\Glacier2\Resource\ZResourceHeaderReader.cpp" />
+    <ClCompile Include="src\Glacier2\Resource\ZRuntimeResourceID.cpp" />
+    <ClCompile Include="src\Glacier2\SColorRGB.cpp" />
+    <ClCompile Include="src\Glacier2\SColorRGBA.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicCompositionData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicGameCueData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicPlaylistData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicPlaylistEndBehavior.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicPlaylistNodeData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicSegmentData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicStingerData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicTimeSignature.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicTrackData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicTrackEntryData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicTrackExposingGroupData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicTrackVariationData.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SMusicTransition.cpp" />
+    <ClCompile Include="src\Glacier2\Sound\SWaveBankResourceData.cpp" />
+    <ClCompile Include="src\Glacier2\TypeInfo\IType.cpp" />
+    <ClCompile Include="src\Glacier2\TypeInfo\STypeID.cpp" />
+    <ClCompile Include="src\Glacier2\ZBinaryDeserializer.cpp" />
+    <ClCompile Include="src\Glacier2\ZBinarySerializer.cpp" />
+    <ClCompile Include="src\Glacier2\ZCurve.cpp" />
+    <ClCompile Include="src\Glacier2\ZString.cpp" />
+    <ClCompile Include="src\Glacier2\ZTextureMap.cpp" />
+    <ClCompile Include="src\Glacier2\ZVariant.cpp" />
+    <ClCompile Include="src\Hash\MD5.cpp" />
+    <ClCompile Include="src\Hash\ZCrc32Generator.cpp" />
+    <ClCompile Include="src\IO\IInputStream.cpp" />
+    <ClCompile Include="src\IO\IOutputStream.cpp" />
+    <ClCompile Include="src\IO\ZBinaryReader.cpp" />
+    <ClCompile Include="src\IO\ZBinaryWriter.cpp" />
+    <ClCompile Include="src\IO\ZFileInputStream.cpp" />
+    <ClCompile Include="src\IO\ZFileOutputStream.cpp" />
+    <ClCompile Include="src\IO\ZJSONDeserializer.cpp" />
+    <ClCompile Include="src\IO\ZJSONSerializer.cpp" />
+    <ClCompile Include="src\IO\ZMemoryInputStream.cpp" />
+    <ClCompile Include="src\IO\ZMemoryOuputStream.cpp" />
+    <ClCompile Include="src\Material\ZRenderMaterialEntity.cpp" />
+    <ClCompile Include="src\Material\ZRenderMaterialEntityBlueprint.cpp" />
+    <ClCompile Include="src\Material\ZRenderMaterialInstance.cpp" />
+    <ClCompile Include="src\Model\GLTF.cpp" />
+    <ClCompile Include="src\Model\ZMeshBufferBuilder.cpp" />
+    <ClCompile Include="src\Model\ZRenderPrimitive.cpp" />
+    <ClCompile Include="src\Registry\ZEnumRegistry.cpp" />
+    <ClCompile Include="src\Registry\ZPropertyRegistry.cpp" />
+    <ClCompile Include="src\Registry\ZTypeRegistry.cpp" />
+    <ClCompile Include="src\Scaleform\PNG.cpp" />
+    <ClCompile Include="src\Scaleform\SwfFileReader.cpp" />
+    <ClCompile Include="src\Scaleform\SWFRender.cpp" />
+    <ClCompile Include="src\SEntityTemplate.cpp" />
+    <ClCompile Include="src\ZAudio.cpp" />
+    <ClCompile Include="src\Glacier2\ZObjectRef.cpp" />
+    <ClCompile Include="src\ZBehaviorTree.cpp" />
+    <ClCompile Include="src\ZChartType.cpp" />
+    <ClCompile Include="src\ZEntityTemplate.cpp" />
+    <ClCompile Include="src\ZHeaderLibrary.cpp" />
+    <ClCompile Include="src\ZMaterial.cpp" />
+    <ClCompile Include="src\ZModel.cpp" />
+    <ClCompile Include="src\ZPackageList.cpp" />
+    <ClCompile Include="src\ZResource.cpp" />
+    <ClCompile Include="src\ZResourceExporter.cpp" />
+    <ClCompile Include="src\ZResourceImporter.cpp" />
+    <ClCompile Include="src\ZResourceIndex.cpp" />
+    <ClCompile Include="src\ZResourceLibrary.cpp" />
+    <ClCompile Include="src\ZScaleform.cpp" />
+    <ClCompile Include="src\ZTextList.cpp" />
+    <ClCompile Include="src\ZTexture.cpp" />
+    <ClCompile Include="src\ZUtility.cpp" />
+    <ClCompile Include="src\ZVideo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Enums.json" />
+    <None Include="data\Properties.json" />
+    <None Include="data\STypeIDs.json" />
+    <None Include="include\DirectXTex\DirectXTex.inl" />
+    <None Include="include\FSB\Vorbis\headers.inc" />
+    <None Include="include\ogg\config_types.h.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\HashMap.txt" />
+    <Text Include="data\ResourceIDs.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

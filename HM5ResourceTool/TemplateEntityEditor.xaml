@@ -1,0 +1,656 @@
+﻿<mah:MetroWindow x:Class="HM5ResourceTool.TemplateEntityEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HM5ResourceTool"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        mc:Ignorable="d"
+        Title="Template Entity Editor"
+        Height="800"
+        Width="1400"
+        ContentRendered="TemplateEntityEditorWindow_ContentRendered"
+        Closed="TemplateEntityEditorWindow_Closed"
+        TitleCharacterCasing="Normal">
+    <Window.Resources>
+        <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander x:Name="exp" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="{Binding Name}"/>
+                            </Expander.Header>
+                            <ItemsPresenter />
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" Width="150" Margin="5,10,5,0">
+            <Label
+                Content="Views"
+                FontSize="18"
+                FontWeight="Bold" />
+            <Button
+                Content="Overrides"
+                Style="{StaticResource Button}"
+                FontSize="16"
+                Margin="0,5,0,0" />
+            <Button
+                Content="Tree View"
+                Style="{StaticResource Button}"
+                FontSize="16"
+                Margin="0,5,0,0" />
+            <Button
+                Content="Graph View"
+                Style="{StaticResource Button}"
+                FontSize="16"
+                Margin="0,5,0,0" />
+        </StackPanel>
+        <Grid x:Name="treeViewGrid" Margin="15,10,15,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label
+                    Content="Filter"
+                    FontSize="16" />
+                <TextBox
+                    x:Name="txtContent"
+                    Grid.Row="1"
+                    TextChanged="TxtContent_TextChanged"
+                    GotFocus="TxtContent_GotFocus"
+                    LostFocus="TxtContent_LostFocus" />
+                <CheckBox
+                    x:Name="chkExactSearch"
+                    Grid.Row="2"
+                    Content="Exact search"
+                    FontSize="16"
+                    Margin="0,10,0,0" />
+                <WindowsFormsHost Grid.Row="3" Margin="0,10,0,0">
+                    <wf:TreeView
+                        x:Name="treeView"
+                        Font="Consolas,16"
+                        AfterSelect="TreeView_AfterSelect" />
+                </WindowsFormsHost>
+                <Grid Grid.Row="4" HorizontalAlignment="Center" Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Content="Collapse Tree"
+                        FontSize="16"
+                        Style="{StaticResource Button}"
+                        Click="BtnCollapseTree_Click" />
+                    <Button
+                        Grid.Column="1"
+                        Content="Go to Previous Entity"
+                        FontSize="16"
+                        Style="{StaticResource Button}"
+                        Margin="10,0,0,0"
+                        Click="BtnGoToPreviousEntity_Click" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Margin="5,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <Label
+                    Name="txtEntityName"
+                    Content="Templte Entity Editor"
+                    FontSize="18"
+                    FontWeight="Bold" />
+                <TabControl
+                    Grid.Row="1"
+                    Name="tabControl"
+                    SelectionChanged="TabControl_SelectionChanged">
+                    <TabItem Header="JSON">
+                        <ScrollViewer
+                            x:Name="scrollViewer"
+                            Focusable="False"
+                            CanContentScroll="True"
+                            VerticalContentAlignment="Top"
+                            HorizontalContentAlignment="Left"
+                            Grid.Row="1"
+                            PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                            <avalonEdit:TextEditor
+                                    Name="textEditor"
+                                    FontFamily="Consolas"
+                                    SyntaxHighlighting="Json"
+                                    FontSize="16pt"
+                                    ShowLineNumbers="True" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Properties">
+                        <ScrollViewer
+                            x:Name="scrollViewer2"
+                            Focusable="False"
+                            CanContentScroll="True"
+                            VerticalContentAlignment="Top"
+                            HorizontalContentAlignment="Left"
+                            PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                            <Grid>
+                                <DataGrid
+                                    x:Name="dataGrid"
+                                    AutoGenerateColumns="False"
+                                    ItemsSource="{Binding}"
+                                    FontSize="16"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False">
+                                    <DataGrid.GroupStyle>
+                                        <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                                            <GroupStyle.Panel>
+                                                <ItemsPanelTemplate>
+                                                    <DataGridRowsPresenter />
+                                                </ItemsPanelTemplate>
+                                            </GroupStyle.Panel>
+                                        </GroupStyle>
+                                    </DataGrid.GroupStyle>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Name"
+                                            Binding="{Binding Name}"
+                                            Width="200"
+                                            HeaderStyle="{StaticResource DataGridColumnHeader}" />
+                                        <DataGridTemplateColumn
+                                            Header="Value"
+                                            Width="300"
+                                            HeaderStyle="{StaticResource DataGridColumnHeader}"
+                                            CellStyle="{StaticResource DataGridCell}">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ContentControl Content="{Binding}">
+                                                        <ContentControl.Style>
+                                                            <Style TargetType="ContentControl">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="Bool">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <CheckBox
+                                                                                                        IsChecked="{Binding Value}"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="Enum">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <ComboBox
+                                                                                                        ItemsSource="{Binding Values}"
+                                                                                                        SelectedItem="{Binding SelectedName}"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="BaseType">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding Text}"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="SVector2">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <TextBox Text="{Binding X}" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding Y}" Grid.Column="1" Margin="0,5,0,0" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="SVector3">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <TextBox Text="{Binding X}" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding Y}" Grid.Column="1" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding Z}" Grid.Column="2" Margin="0,5,0,0" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="SMatrix43">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <Label
+                                                                                                    Content="Rotation"
+                                                                                                    Padding="0"
+                                                                                                    Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding Rotation.X}" Grid.Column="1"  Margin="0,5,0,0"/>
+                                                                                                    <TextBox Text="{Binding Rotation.Y}" Grid.Column="2" Margin="5,5,5,0" />
+                                                                                                    <TextBox Text="{Binding Rotation.Z}" Grid.Column="3" Margin="0,5,0,0" />
+                                                                                                    <Label
+                                                                                                    Content="Position"
+                                                                                                    Grid.Row="2"
+                                                                                                    Margin="0,5,0,0"
+                                                                                                    Padding="0" />
+                                                                                                    <TextBox Text="{Binding Position.X}" Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding Position.Y}" Grid.Column="2" Grid.Row="2" Margin="5,5,5,0" />
+                                                                                                    <TextBox Text="{Binding Position.Z}" Grid.Column="3" Grid.Row="2" Margin="0,5,0,0" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="SColorRGB">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <TextBox Text="{Binding R}" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding G}" Grid.Column="1" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding B}" Grid.Column="2" Margin="0,5,0,0" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="SColorRGBA">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <TextBox Text="{Binding R}" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding G}" Grid.Column="1" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding B}" Grid.Column="2" Margin="0,5,0,0" />
+                                                                                                    <TextBox Text="{Binding A}" Grid.Column="3" Margin="0,5,0,0" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="SEntityTemplateReference">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <Label
+                                                                                                        Content="Entity Name"
+                                                                                                        Padding="0"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding EntityName}"
+                                                                                                        Grid.Column="1"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                    <Label
+                                                                                                        Content="Exposed Entity"
+                                                                                                        Grid.Row="1"
+                                                                                                        Margin="0,5,0,5"
+                                                                                                        Padding="0" />
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding ExposedEntity}"
+                                                                                                        Grid.Row="1"
+                                                                                                        Grid.Column="1"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="ZRuntimeResourceID">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <Label
+                                                                                                        Content="Resource ID"
+                                                                                                        Padding="0"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding ResourceID}"
+                                                                                                        Grid.Column="1"
+                                                                                                        Margin="0,5,0,5" />
+                                                                                                    <Label
+                                                                                                        Content="Flag"
+                                                                                                        Grid.Row="1"
+                                                                                                        Margin="0,5,0,5"
+                                                                                                        Padding="0" />
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding Flags}"
+                                                                                                        Margin="0,5,0,5"
+                                                                                                        Grid.Row="1"
+                                                                                                        Grid.Column="1" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TypeName}" Value="SEntityTemplatePropertyAlias">
+                                                                        <Setter Property="ContentTemplate">
+                                                                            <Setter.Value>
+                                                                                <DataTemplate>
+                                                                                    <ListBox ItemsSource="{Binding Value}">
+                                                                                        <ListBox.ItemTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                        <RowDefinition Height="Auto" />
+                                                                                                    </Grid.RowDefinitions>
+                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                    </Grid.ColumnDefinitions>
+                                                                                                    <Label
+                                                                                                        Content="Alias Name"
+                                                                                                        Margin="0,5,0,5"
+                                                                                                        Padding="0" />
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding AliasName}"
+                                                                                                        Margin="0,5,0,0"
+                                                                                                        Grid.Column="1" />
+                                                                                                    <Label
+                                                                                                        Content="Entity Name"
+                                                                                                        Grid.Row="1"
+                                                                                                        Margin="0,5,0,5"
+                                                                                                        Padding="0" />
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding EntityName}"
+                                                                                                        Grid.Row="1"
+                                                                                                        Grid.Column="1"
+                                                                                                        Margin="0,5,0,0" />
+                                                                                                    <Label
+                                                                                                        Content="Property Name"
+                                                                                                        Grid.Row="2"
+                                                                                                        Margin="0,5,0,5"
+                                                                                                        Padding="0" />
+                                                                                                    <TextBox
+                                                                                                        Text="{Binding PropertyName}"
+                                                                                                        Grid.Row="2"
+                                                                                                        Grid.Column="1"
+                                                                                                        Margin="0,5,0,0" />
+                                                                                                </Grid>
+                                                                                            </DataTemplate>
+                                                                                        </ListBox.ItemTemplate>
+                                                                                    </ListBox>
+                                                                                </DataTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </ContentControl.Style>
+                                                    </ContentControl>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+                <Grid
+                    x:Name="propertyButtonsGrid"
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0"
+                    Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Content="Add Property"
+                        FontSize="16"
+                        Style="{StaticResource Button}"
+                        Click="BtnAddProperty_Click" />
+                    <Button
+                        Content="Add Property Alias"
+                        FontSize="16"
+                        Style="{StaticResource Button}"
+                        Click="BtnAddPropertyAlias_Click" />
+                    <Button
+                        Grid.Column="1"
+                        Content="Remove Property"
+                        FontSize="16"
+                        Style="{StaticResource Button}"
+                        Margin="10,0,0,0"
+                        Click="BtnRemoveProperty_Click" />
+                    <Button
+                        Grid.Column="1"
+                        Content="Remove Property Alias"
+                        FontSize="16"
+                        Style="{StaticResource Button}"
+                        Margin="10,0,0,0"
+                        Click="BtnRemovePropertyAlias_Click" />
+                </Grid>
+                <ScrollViewer Grid.Row="3">
+                    <Grid
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Content="References"
+                            FontSize="16"
+                            FontWeight="Bold" />
+                        <TextBox
+                            x:Name="lblReferences"
+                            Grid.Row="1"
+                            FontSize="16"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Text="{Binding Text, Mode=OneWay}"
+                            IsReadOnly="True"
+                            TextWrapping="Wrap"
+                            Margin="5,0,0,0" />
+                        <TextBox
+                            x:Name="lblReferences2"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="16"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Text="{Binding Text, Mode=OneWay}"
+                            IsReadOnly="True"
+                            TextWrapping="Wrap"
+                            Margin="5,0,0,0" />
+                        <Label
+                            Content="Referenced by"
+                            Grid.Row="2"
+                            FontSize="16"
+                            FontWeight="Bold" />
+                        <TextBox
+                            x:Name="lblBackReferences"
+                            Grid.Row="3"
+                            FontSize="16"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Text="{Binding Text, Mode=OneWay}"
+                            IsReadOnly="True"
+                            TextWrapping="Wrap"
+                            Margin="5,0,0,0" />
+                        <TextBox
+                            x:Name="lblBackReferences2"
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            FontSize="16"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Text="{Binding Text, Mode=OneWay}"
+                            IsReadOnly="True"
+                            TextWrapping="Wrap"
+                            Margin="5,0,0,0" />
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</mah:MetroWindow>

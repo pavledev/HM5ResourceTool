@@ -1,0 +1,285 @@
+﻿<mah:MetroWindow x:Class="HM5ResourceTool.ResourcesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HM5ResourceTool"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:hx="http://helix-toolkit.org/wpf"
+        xmlns:treeListView="clr-namespace:TreeListView"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        mc:Ignorable="d"
+        Title="Resources"
+        Height="800"
+        Width="1400"
+        TitleCharacterCasing="Normal"
+        FontSize="16"
+        Loaded="ResourcesWindow_Loaded">
+    <Window.Resources>
+        <Style x:Key="lvStyle" TargetType="{x:Type ListView}">
+            <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
+            <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling"/>
+            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True"/>
+            <Setter Property="ListView.ItemsSource" Value="{Binding}"/>
+            <Setter Property="ListView.View">
+                <Setter.Value>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeader}">
+                        <GridViewColumn Header="Index In Library" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding IndexInLibrary}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Name" Width="200" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="File Format" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FileFormat}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                    <Setter Property="ListView.Cursor" Value="Wait"/>
+                    <Setter Property="ListView.Background" Value="LightGray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Menu>
+                <MenuItem Header="Export">
+                    <MenuItem
+                        Header="Export current resource library"
+                        Click="ExportCurrentResourceLibraryMenuItem_Click" />
+                </MenuItem>
+                <MenuItem Header="Theme">
+                    <MenuItem
+                        Header="Light/Blue"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Light/Brown"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Light/Green"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Light/Orange"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Light/Purple"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Light/Red"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Light/Yellow"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/Blue"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/Brown"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/Green"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/Orange"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/Purple"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/Red"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/Yellow"
+                        Click="ChangeThemeMenuItem_Click" />
+                    <MenuItem
+                        Header="Dark/While"
+                        Click="ChangeThemeMenuItem_Click" />
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="6*" />
+            </Grid.ColumnDefinitions>
+            <ComboBox Name="cbResourceLibraries" FontSize="16" SelectionChanged="CbResourceLibraries_SelectionChanged"/>
+            <ListView
+                Grid.Row="1"
+                Grid.Column="0"
+                Name="lvResources"
+                Height="Auto"
+                Style="{DynamicResource lvStyle}"
+                SelectionChanged="LVResources_SelectionChanged"
+                ContextMenuOpening="ContextMenu_ContextMenuOpening">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem
+                            x:Name="exportResourceMenuItem"
+                            Header="Export Resource"
+                            Click="ExportResourceMenuItem_Click" />
+                        <MenuItem
+                            x:Name="importResourceMenuItem"
+                            Header="Import Resource"
+                            Click="ImportResourceMenuItem_Click" />
+                        <MenuItem
+                            x:Name="displayTEMPAndTBLUMenuItem"
+                            Header="Display TEMP and TBLU"
+                            Click="DisplayTEMPAndTBLUMenuItem_Click" />
+                        <MenuItem
+                            x:Name="displayMATTAndMATBMenuItem"
+                            Header="Display MATT and MATB"
+                            Click="DisplayMATTAndMATBMenuItem_Click" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+            <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+            <TabControl
+                Name="tabControl"
+                Grid.Row="0"
+                Grid.Column="2"
+                Grid.RowSpan="2"
+                SelectionChanged="TabControl_SelectionChanged">
+                <TabItem Header="Info">
+                    <TextBox
+                        x:Name="txtDetails"
+                        FontSize="16"
+                        FontFamily="Consolas"
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem Header="Header Library Hex">
+                    <TextBox
+                        x:Name="txtHeaderLibraryHex"
+                        FontSize="16"
+                        FontFamily="Consolas"
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem Header="Resource Library Hex">
+                    <TextBox
+                        x:Name="txtResourceLibraryHex"
+                        FontSize="16"
+                        FontFamily="Consolas"
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem x:Name="jsonViewerTabItem" Header="JSON Viewer" Visibility="Collapsed">
+                    <ScrollViewer
+                        Focusable="False"
+                        CanContentScroll="True"
+                        VerticalContentAlignment="Top"
+                        HorizontalContentAlignment="Left"
+                        Grid.Column="1"
+                        Grid.RowSpan="2"
+                        PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                            <avalonEdit:TextEditor
+                                Name="textEditor"
+                                FontFamily="Consolas"
+                                SyntaxHighlighting="Json"
+                                FontSize="16pt"
+                                ShowLineNumbers="True" />
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem x:Name="textureViewerTabItem" Header="Texture Viewer" Visibility="Collapsed">
+                    <Image x:Name="image" />
+                </TabItem>
+                <TabItem x:Name="mediaPlayerTabItem" Header="Media Player" Visibility="Collapsed">
+                    <Grid Name="grid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="8*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <ListBox Name="lbAudioSamples" Grid.ColumnSpan="3" />
+                        <Label Name="lblTime" Grid.Row="1" Content="00:00:00" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <ProgressBar Name="progressBar" Grid.Row="1" Grid.Column="1" MouseLeftButtonUp="ProgressBar_MouseLeftButtonUp" Height="20" Margin="5,5,5,5" VerticalAlignment="Center" />
+                        <Label Name="lblDuration" Grid.Row="1" Grid.Column="2" Content="00:00:00" Margin="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Name="btnTogglePlay" Grid.Row="2" Grid.ColumnSpan="3" Content="Play" Click="BtnTogglePlay_Click" Margin="20,5,20,5" Style="{StaticResource Button}" FontSize="16" />
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="modelViewerTabItem" Header="Model Viewer" Visibility="Collapsed">
+                    <Grid>
+                        <hx:HelixViewport3D x:Name="helixViewport">
+                            <hx:HelixViewport3D.Camera>
+                                <OrthographicCamera NearPlaneDistance="-1.7976931348623157E+8" FarPlaneDistance="1.7976931348623157E+8" />
+                            </hx:HelixViewport3D.Camera>
+                            <hx:SunLight/>
+                            <hx:DefaultLights></hx:DefaultLights>
+                            <ModelVisual3D x:Name="model"></ModelVisual3D>
+                        </hx:HelixViewport3D>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="materialViewerTabItem" Header="Material Instance Viewer" Visibility="Collapsed">
+                    <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                        <Grid>
+                            <treeListView:TreeListView
+                            ChildrenPropertyName="Children"
+                            ItemsSource="{Binding MaterialProperties}"
+                            Style="{StaticResource VirtualizedMetroTreeListView}">
+                                <treeListView:TreeListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="230" Header="Name">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Foreground="#e74c3c" Text="{Binding Name}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Type}"
+                                        Header="Type" />
+                                        <GridViewColumn
+                                        Width="250"
+                                        DisplayMemberBinding="{Binding Value}"
+                                        Header="Value" />
+                                    </GridView>
+                                </treeListView:TreeListView.View>
+                            </treeListView:TreeListView>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Name="textViewerTabItem" Header="Text Viewer" Visibility="Collapsed">
+                    <TextBox
+                        x:Name="txtTextList"
+                        FontSize="16"
+                        FontFamily="Consolas"
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto" />
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
+</mah:MetroWindow>
+    
